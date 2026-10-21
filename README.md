@@ -124,38 +124,50 @@ FAWRY_SECURITY_KEY=secret_fawry_key
 ## 🛠️ Setup & Installation Instructions
 
 ### Prerequisites:
-- PHP >= 8.2 with OpenSSL, PDO, Mbstring, and Tokenizer extensions.
+- PHP >= 8.2 with PDO, PDO_MySQL, OpenSSL, Mbstring, and Tokenizer extensions.
 - Composer
-- SQLite or MySQL
+- **MySQL Database Server** (e.g. via Laragon, XAMPP, or standalone MySQL)
 
 ### 1. Clone & Enter Directory:
 ```bash
-cd d:\projects\laravel-task\laravel-task
+git clone <repository-url>
+cd laravel-task
 ```
 
-### 2. Environment Setup:
+### 2. Environment Setup (MySQL):
+Copy the example environment configuration:
 ```bash
 cp .env.example .env
 ```
 
-Ensure SQLite database file exists (or configure MySQL in `.env`):
-```bash
-touch database/database.sqlite
+Create a MySQL database (e.g., named `laravel_order_payment`), and update your `.env` credentials:
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=laravel_order_payment
+DB_USERNAME=root
+DB_PASSWORD=
 ```
 
-### 3. Generate App Key & JWT Secret:
+### 3. Install Dependencies:
+```bash
+composer install
+```
+
+### 4. Generate App Key & JWT Secret:
 ```bash
 php artisan key:generate
 php artisan jwt:secret
 ```
 
-### 4. Run Migrations & Seeders:
+### 5. Run Migrations & Seeders:
 ```bash
 php artisan migrate:fresh --seed
 ```
-*This will create the database schema and seed a demo user (`admin@example.com` / `password123`) along with demo orders.*
+*This will create all tables with proper indexes and foreign key constraints in your MySQL database, and seed a demo admin user (`admin@example.com` / `password123`) along with sample orders.*
 
-### 5. Start Development Server:
+### 6. Start Development Server:
 ```bash
 php artisan serve
 ```
